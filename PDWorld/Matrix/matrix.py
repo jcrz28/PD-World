@@ -1,8 +1,9 @@
 import random
 from copy import deepcopy
-from PDWorld.Matrix.location import Location
-from PDWorld.Agent.agentOperator import Operator
+
 from PDWorld.Adjacent.adjacent import Adjacent
+from PDWorld.Agent.operator import Operator
+from PDWorld.Matrix.location import Location
 
 
 class Matrix:
@@ -19,36 +20,30 @@ class Matrix:
     def getOccupiedKey(self):
         return list(self.cell.keys())[1]
 
-    def checkValidMoves(self, row, col, randomNumber, block, occupied):
+    # No operators are valid going to a pickup or drop off locations.
+    # Therefore, the agents will lose reward.
+    def checkValidMoves(self, row, col, randomNumber, occupied):
         if randomNumber == 0 and Operator.north(self.matrix, row, col, occupied):
             self.Agent.agentMovesInYAxis(self.matrix, row - 1, col, occupied, -1)
-
-            if not self.Agent.agentReward(self.matrix, row - 1, col, block):
-                self.Agent.loseReward()
+            self.Agent.loseReward()
 
             return True
 
         if randomNumber == 1 and Operator.south(self.matrix, row, col, occupied):
             self.Agent.agentMovesInYAxis(self.matrix, row + 1, col, occupied, 1)
-
-            if not self.Agent.agentReward(self.matrix, row + 1, col, block):
-                self.Agent.loseReward()
+            self.Agent.loseReward()
 
             return True
 
         if randomNumber == 2 and Operator.east(self.matrix, row, col, occupied):
             self.Agent.agentMovesInXAxis(self.matrix, row, col + 1, occupied, 1)
-
-            if not self.Agent.agentReward(self.matrix, row, col + 1, block):
-                self.Agent.loseReward()
+            self.Agent.loseReward()
 
             return True
 
         if randomNumber == 3 and Operator.west(self.matrix, row, col, occupied):
             self.Agent.agentMovesInXAxis(self.matrix, row, col - 1, occupied, -1)
-
-            if not self.Agent.agentReward(self.matrix, row, col - 1, block):
-                self.Agent.loseReward()
+            self.Agent.loseReward()
 
             return True
 
@@ -63,7 +58,7 @@ class Matrix:
 
         while not move:
             randomNumber = random.randint(0, 3)
-            move = self.checkValidMoves(row, col, randomNumber, block, occupied)
+            move = self.checkValidMoves(row, col, randomNumber, occupied)
         return
 
     def initializeMatrix(self, block, occupied):
@@ -98,7 +93,7 @@ class Matrix:
         print(self.Agent.reward)
 
     def start(self):
-        random.seed(100)
+        random.seed(1)
         terminalStates, block, occupied = 0, self.getBlockKey(), self.getOccupiedKey()
         self.initializeMatrix(block, occupied)
 
