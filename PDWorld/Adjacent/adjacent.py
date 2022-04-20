@@ -1,5 +1,5 @@
 from PDWorld.Agent.agent import Agent
-from PDWorld.Agent.agentOperator import Operator
+from PDWorld.Agent.operator import Operator
 
 
 class Adjacent(Agent):
