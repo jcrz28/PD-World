@@ -1,5 +1,5 @@
 from PDWorld.Matrix.location import Location
-from PDWorld.Agent.agentOperator import Operator
+from PDWorld.Agent.operator import Operator
 
 
 class Agent:
