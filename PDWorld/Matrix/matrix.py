@@ -26,25 +26,21 @@ class Matrix:
         if randomNumber == 0 and Operator.north(self.matrix, row, col, occupied):
             self.Agent.agentMovesInYAxis(self.matrix, row - 1, col, occupied, -1)
             self.Agent.loseReward()
-
             return True
 
         if randomNumber == 1 and Operator.south(self.matrix, row, col, occupied):
             self.Agent.agentMovesInYAxis(self.matrix, row + 1, col, occupied, 1)
             self.Agent.loseReward()
-
             return True
 
         if randomNumber == 2 and Operator.east(self.matrix, row, col, occupied):
             self.Agent.agentMovesInXAxis(self.matrix, row, col + 1, occupied, 1)
             self.Agent.loseReward()
-
             return True
 
         if randomNumber == 3 and Operator.west(self.matrix, row, col, occupied):
             self.Agent.agentMovesInXAxis(self.matrix, row, col - 1, occupied, -1)
             self.Agent.loseReward()
-
             return True
 
         return False
@@ -104,3 +100,5 @@ class Matrix:
                 self.initializeMatrix(block, occupied)
             self.moveAgent(block, occupied)
             self.Agent.changeAgent()
+
+        self.printMatrix()
